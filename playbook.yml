@@ -1,0 +1,22 @@
+- hosts: servidores
+  become: yes  # Para ejecutar las tareas con privilegios de superusuario
+  tasks:
+    - name: Actualizar cache de software de apt
+      apt:
+        update_cache: yes
+
+    - name: Instalar Apache
+      apt:
+        name: apache2
+        state: present
+
+    - name: Iniciar el servicio Apache
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Copiar archivos HTML al servidor
+      copy:
+        src: /path/local/index.html
+        dest: /var/www/html/index.html
